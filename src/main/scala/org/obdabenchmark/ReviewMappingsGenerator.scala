@@ -10,12 +10,12 @@ class ReviewMappingsGenerator(conn : Connection) {
 	
 	
 	def getDistictLanguages() : ResultSet = {
-	  val sqlQuery = "SELECT DISTINCT(language) FROM review";
+	  val sqlQuery = "SELECT DISTINCT(language)FROM review";
 	  val rs = Utility.executeQuery(ReviewMappingsGenerator.this.conn, sqlQuery, -1);
 	  rs;
 	}
 	
-	def generateMappings(filename : String) {
+	def generateMappings(filename : String, outputDirectory : String, outputFile : String) {
 	  val rs = ReviewMappingsGenerator.this.getDistictLanguages();
 	  
 	  val sourceFromString = Source.fromFile(filename);
@@ -25,7 +25,11 @@ class ReviewMappingsGenerator(conn : Connection) {
 	  while(rs.next()) {
 	    val lang = rs.getString("language")
 	    val reviewMappingString = reviewMappingTemplate.replaceAll("<language>", lang);
-	    val newFilename = "output/" + filename.replaceAll("template-", "").replaceAll(".ttl", "-" + lang + ".ttl");
+	    val outputDirectoryFile = new File(outputDirectory);
+	    if(!outputDirectoryFile.exists()) {
+	      outputDirectoryFile.mkdir();
+	    }
+	    val newFilename = outputDirectory + "/" + outputFile.replaceAll("<language>", lang);
 	    
 	    Utility.printToFile(new File(newFilename)) (p => p.println(reviewMappingString))
 	    println("reviewMapping = " + reviewMappingString);

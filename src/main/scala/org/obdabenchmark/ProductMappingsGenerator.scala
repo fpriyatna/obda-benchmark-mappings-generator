@@ -7,13 +7,14 @@ import java.io.File
 
 class ProductMappingsGenerator(conn : Connection) {
 	
+	
 	def getAvailableProductTypes() : ResultSet = {
 	  val sqlQuery = "SELECT nr FROM producttype";
 	  val rs = Utility.executeQuery(this.conn, sqlQuery, -1);
 	  rs;	  
 	}
 
-	def generateMappings(mappingTemplateFilename : String) {
+	def generateMappings(mappingTemplateFilename : String, outputDirectory : String, outputFilename : String) {
 	  val rs = this.getAvailableProductTypes();
 	  
 	  val sourceFromString = Source.fromFile(mappingTemplateFilename);
@@ -24,8 +25,11 @@ class ProductMappingsGenerator(conn : Connection) {
 	    val productTypeNr = rs.getString("nr")
 	    val productMappingString = productMappingTemplate.replaceAll(
 	        "<producttype>", productTypeNr);
-	    val newFilename = "output/" + mappingTemplateFilename.replaceAll(
-	        "template-", "").replaceAll(".ttl", "-ProductType" + productTypeNr + ".ttl");
+	    val outputDirectoryFile = new File(outputDirectory);
+	    if(!outputDirectoryFile.exists()) {
+	      outputDirectoryFile.mkdir();
+	    }
+	    val newFilename = outputDirectoryFile + "/" + outputFilename.replaceAll("<producttype>", productTypeNr);;
 	    
 	    Utility.printToFile(new File(newFilename)) (p => p.println(productMappingString))
 	    println("reviewMapping = " + productMappingString);
