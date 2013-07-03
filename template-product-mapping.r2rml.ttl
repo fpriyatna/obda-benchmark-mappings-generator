@@ -1,0 +1,138 @@
+@prefix bsbm-inst: <http://www.obda-benchmark.org/ontologies/bsbm/instances/> .
+@prefix bsbm: <http://www.obda-benchmark.org/ontologies/bsbm/vocabulary/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rr: <http://www.w3.org/ns/r2rml#> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix ex: <http://example.com/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix rev: <http://purl.org/stuff/rev#> .
+
+<TriplesMapProductType<producttype>Products>
+   a rr:TriplesMap;
+        
+   rr:logicalTable [ rr:sqlQuery  """SELECT * FROM product WHERE nr IN (SELECT product FROM producttypeproduct WHERE product = nr AND producttype = <producttype>)""" ];
+
+   rr:subjectMap [ rr:termType rr:IRI; rr:class bsbm:Product; 
+      rr:template "http://www.obda-benchmark.org/ontologies/bsbm/instances/Product/{nr}";
+   ];
+
+   rr:predicateObjectMap [ 
+      rr:predicateMap [ rr:constant rdfs:label ]; 
+      rr:objectMap    [ rr:termType rr:Literal; rr:column "label"; ];
+   ];
+
+   rr:predicateObjectMap [ 
+      rr:predicateMap [ rr:constant rdfs:comment ]; 
+      rr:objectMap    [ rr:termType rr:Literal; rr:column "comment"; ];
+   ];
+
+   rr:predicateObjectMap [ 
+      rr:predicateMap [ rr:constant rdf:type ]; 
+      rr:objectMap    [ 
+         rr:template "http://www.obda-benchmark.org/ontologies/bsbm/vocabulary/ProducerType/<producttype>";
+      ];
+   ];
+	
+   rr:predicateObjectMap [ 
+      rr:predicateMap [ rr:constant bsbm:producer ]; 
+      rr:objectMap [ rr:termType rr:IRI;
+         rr:template "http://www.obda-benchmark.org/ontologies/bsbm/instances/Producer/{producer}";
+      ];
+   ];
+
+   rr:predicateObjectMap [ 
+      rr:predicateMap [ rr:constant bsbm:productPropertyTextual1 ]; 
+      rr:objectMap    [ rr:termType rr:Literal; rr:column "propertytex1"; ];
+   ];
+
+   rr:predicateObjectMap [ 
+      rr:predicateMap [ rr:constant bsbm:productPropertyNumeric1 ]; 
+      rr:objectMap    [ rr:termType rr:Literal; rr:column "propertynum1"; rr:datatype xsd:integer];
+   ];
+
+   rr:predicateObjectMap [ 
+      rr:predicateMap [ rr:constant bsbm:productPropertyTextual2 ]; 
+      rr:objectMap    [ rr:termType rr:Literal; rr:column "propertytex2"; ];
+   ];
+
+   rr:predicateObjectMap [ 
+      rr:predicateMap [ rr:constant bsbm:productPropertyNumeric2 ]; 
+      rr:objectMap    [ rr:termType rr:Literal; rr:column "propertynum2"; rr:datatype xsd:integer];
+   ];
+
+   rr:predicateObjectMap [ 
+      rr:predicateMap [ rr:constant bsbm:productPropertyTextual3 ]; 
+      rr:objectMap    [ rr:termType rr:Literal; rr:column "propertytex3"; ];
+   ];
+
+   rr:predicateObjectMap [ 
+      rr:predicateMap [ rr:constant bsbm:productPropertyNumeric3 ]; 
+      rr:objectMap    [ rr:termType rr:Literal; rr:column "propertynum3"; rr:datatype xsd:integer];
+   ];
+
+   rr:predicateObjectMap [ 
+      rr:predicateMap [ rr:constant bsbm:productPropertyTextual4 ]; 
+      rr:objectMap    [ rr:termType rr:Literal; rr:column "propertytex4"; ];
+   ];
+
+   rr:predicateObjectMap [ 
+      rr:predicateMap [ rr:constant bsbm:productPropertyNumeric4 ]; 
+      rr:objectMap    [ rr:termType rr:Literal; rr:column "propertynum4"; rr:datatype xsd:integer];
+   ];
+
+   rr:predicateObjectMap [ 
+      rr:predicateMap [ rr:constant bsbm:productPropertyTextual5 ]; 
+      rr:objectMap    [ rr:termType rr:Literal; rr:column "propertytex5"; ];
+   ];
+
+   rr:predicateObjectMap [ 
+      rr:predicateMap [ rr:constant bsbm:productPropertyNumeric5 ]; 
+      rr:objectMap    [ rr:termType rr:Literal; rr:column "propertynum5"; rr:datatype xsd:integer];
+   ];
+
+   rr:predicateObjectMap [ 
+      rr:predicateMap [ rr:constant bsbm:productPropertyTextual6 ]; 
+      rr:objectMap    [ rr:termType rr:Literal; rr:column "propertytex6"; ];
+   ];
+
+   rr:predicateObjectMap [ 
+      rr:predicateMap [ rr:constant bsbm:productPropertyNumeric6 ]; 
+      rr:objectMap    [ rr:termType rr:Literal; rr:column "propertynum6"; rr:datatype xsd:integer];
+   ];
+
+   rr:predicateObjectMap [ 
+      rr:predicateMap [ rr:constant <http://www.obda-benchmark.org/ontologies/bsbm/vocabulary/productFeature> ]; 
+      rr:objectMap    [ 
+         rr:parentTriplesMap <TriplesMapProductFeatureProduct>;
+         rr:joinCondition [ rr:child "nr" ; rr:parent "product" ; ]
+      ];
+   ];
+
+   rr:predicateObjectMap [ 
+      rr:predicateMap [ rr:constant dc:publisher ]; 
+      rr:objectMap    [ rr:termType rr:IRI;
+         rr:template "http://www.obda-benchmark.org/ontologies/bsbm/instances/Publisher/{publisher}";
+      ];
+   ];
+
+   rr:predicateObjectMap [ 
+      rr:predicateMap [ rr:constant dc:date ]; 
+      rr:objectMap    [ rr:termType rr:Literal; rr:column "publishdate"; rr:datatype xsd:date ];
+   ];
+
+.
+
+
+<TriplesMapProductFeatureProduct>
+   a rr:TriplesMap;
+
+   rr:logicalTable [ rr:tableName  "productfeatureproduct" ];
+	
+   rr:subjectMap [ rr:termType rr:IRI;
+      rr:template "http://www.obda-benchmark.org/ontologies/bsbm/instances/ProductFeature/{productfeature}";
+   ];
+.
+
+

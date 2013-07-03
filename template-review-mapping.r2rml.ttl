@@ -1,0 +1,70 @@
+@prefix bsbm-inst: <http://www.obda-benchmark.org/ontologies/bsbm/instances/> .
+@prefix bsbm: <http://www.obda-benchmark.org/ontologies/bsbm/vocabulary/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rr: <http://www.w3.org/ns/r2rml#> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix ex: <http://example.com/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix rev: <http://purl.org/stuff/rev#> .
+
+<TriplesMapReview-<language>>
+   a rr:TriplesMap;
+        
+   rr:logicalTable [ rr:sqlQuery  """SELECT * FROM review WHERE language = '<language>'""" ];
+	
+   rr:subjectMap [ rr:termType rr:IRI;
+      rr:template "www.obda-benchmark.org/ontologies/bsbm/instances/Review/{nr}";
+      rr:class <http://www.obda-benchmark.org/ontologies/bsbm/vocabulary/Review>;	
+   ];
+
+   rr:predicateObjectMap [ 
+      rr:predicateMap [ rr:constant bsbm:reviewFor ]; 
+      rr:objectMap    [ rr:termType rr:IRI;
+         rr:template "http://www.obda-benchmark.org/ontologies/bsbm/instances/Product/{product}";
+      ];
+   ];
+
+   rr:predicateObjectMap [ 
+      rr:predicateMap [ rr:constant rev:reviewer ]; 
+      rr:objectMap    [ rr:termType rr:IRI;
+         rr:template "http://www.obda-benchmark.org/ontologies/bsbm/instances/Reviewer/{person}";
+      ];
+   ];
+
+   rr:predicateObjectMap [ 
+      rr:predicateMap [ rr:constant bsbm:reviewDate ]; 
+      rr:objectMap    [ rr:termType rr:Literal; rr:column "reviewdate"; rr:datatype xsd:date ];
+   ];
+
+   rr:predicateObjectMap [ 
+      rr:predicateMap [ rr:constant dc:title ]; 
+      rr:objectMap    [ rr:termType rr:Literal; rr:column "title"; ];
+   ];
+
+   rr:predicateObjectMap [ 
+      rr:predicateMap [ rr:constant rev:text ]; 
+      rr:objectMap    [ rr:termType rr:Literal; rr:column "text"; rr:language "<language>"];
+   ];
+
+   rr:predicateObjectMap [ 
+      rr:predicateMap [ rr:constant bsbm:rating1 ]; 
+      rr:objectMap    [ rr:termType rr:Literal; rr:column "rating1"; rr:datatype xsd:integer];
+   ];
+
+   rr:predicateObjectMap [ 
+      rr:predicateMap [ rr:constant bsbm:rating2 ]; 
+      rr:objectMap    [ rr:termType rr:Literal; rr:column "rating2"; rr:datatype xsd:integer];
+   ];
+
+   rr:predicateObjectMap [ 
+      rr:predicateMap [ rr:constant bsbm:rating3 ]; 
+      rr:objectMap    [ rr:termType rr:Literal; rr:column "rating3"; rr:datatype xsd:integer];
+   ];
+
+   rr:predicateObjectMap [ 
+      rr:predicateMap [ rr:constant bsbm:rating4 ]; 
+      rr:objectMap    [ rr:termType rr:Literal; rr:column "rating4"; rr:datatype xsd:integer];
+   ];
+.
